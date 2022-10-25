@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div class="container w-9/12 mx-auto">
+        <h1 class="text-7xl">[[post.title]]</h1>
+        
+        <h3 class="text-2xl">[[post.description]]</h3>
+        <hr>
+        <div class="flex">
+            <div>[[post.updated_at]] </div>
+            <div class="pl-4">[[post.category]] </div>
+            <div class="pl-4 flex">
+                <span v-for="(tag, index) in post.tags" :key="index">
+                    <span v-if="index !== 0">,</span><span>[[tag]]</span>
+                </span>
+            </div> 
+        </div>
+
+        <div class="flex flex-row">
+            <div class="w-9/12">
+                <img :src="post.image">
+                <div>
+                    [[post.content]]
+                </div>
+            </div>
+            <div class="w-3/12 pl-2">
+                <div class='border mb-4 '>
+                    <div>
+                        Prev Post
+                    </div>
+                    <div>
+                    </div>
+                </div>
+                <div class='border mb-4'>
+                    Next Post
+                </div>
+                <div class='border mb-4'>
+                    categories
+                </div>
+                <div class='border mb-4'>
+                    Tag Cloud
+                </div>
+            </div>
+        <div>
+    </div>
+{% endblock %}
+
+{% block extra-script %}
+    {% include 'include/post_detail_vue.html' %}
+{% endblock%}
