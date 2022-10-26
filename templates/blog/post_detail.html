@@ -8,10 +8,11 @@
         <hr>
         <div class="flex">
             <div>[[post.updated_at]] </div>
-            <div class="pl-4">[[post.category]] </div>
+            <div class="pl-4" @click="serverPage(post.category, '')">[[post.category]] </div>
             <div class="pl-4 flex">
                 <span v-for="(tag, index) in post.tags" :key="index">
-                    <span v-if="index !== 0">,</span><span>[[tag]]</span>
+                    <span v-if="index !== 0">,</span>
+                    <span @click="serverPage('', tag)">[[tag]]</span>
                 </span>
             </div> 
         </div>
@@ -24,21 +25,35 @@
                 </div>
             </div>
             <div class="w-3/12 pl-2">
-                <div class='border mb-4 '>
+                <div class='border mb-4' v-if="prevPost.id">
                     <div>
                         Prev Post
                     </div>
                     <div>
+                        <span @click="fetchPostDetail(prevPost.id)">
+                            [[prevPost.title]]
+                        </span>
+                    </div>
+                </div>
+                <div class='border mb-4' v-if="nextPost.id">
+                    <div>Next Post</div>
+                    <div>            
+                        <span @click="fetchPostDetail(nextPost.id)">
+                            [[nextPost.title]]
+                        </span>
                     </div>
                 </div>
                 <div class='border mb-4'>
-                    Next Post
+                    <span v-for="(cate, index) in cateList" :key="index" @click="serverPage(cate, '')">
+                        <span v-if="index !== 0">&nbsp;</span>
+                        [[cate]]
+                    </span>
                 </div>
                 <div class='border mb-4'>
-                    categories
-                </div>
-                <div class='border mb-4'>
-                    Tag Cloud
+                    <span v-for="(tag, index) in tagList" :key="index" @click="serverPage('', tag)">
+                        <span v-if="index !== 0">&nbsp;</span>
+                        [[tag]]
+                    </span>
                 </div>
             </div>
         <div>
