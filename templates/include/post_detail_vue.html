@@ -5,28 +5,52 @@
         delimiters: [ '[[', ']]'],
         data(){
             return {
-                post: {}
+                post: {},
+                prevPost: {},
+                nextPost: {},
+                cateList: [],
+                tagList: [],
             }
         },
         created(){
             console.log('sdf');
             let postId = location.pathname.split('/')[3]
             this.fetchPostDetail(postId);
+            this.fetchCateTagList();
         },
 
         methods: {
             fetchPostDetail(postId){
-                console.log('fetchPlostList');
-
                 axios.get(`/api/post/${postId}/`)
                 .then(res => {
-                    console.log(res)
-                    this.post = res.data
+                    console.log(res);
+                    this.post = res.data.post;
+                    this.prevPost = res.data.prevPost;
+                    this.nextPost = res.data.nextPost;
                 })
                 .catch(err => {
                     console.log(err.response)
                     alert(`${err.response.status} ${err.response.statusText}`)
                 });
+            },
+            fetchCateTagList(){
+                axios.get(`/api/catetag/`)
+                .then(res => {
+                    console.log(res);
+                    this.cateList = res.data.cateList;
+                    this.tagList = res.data.tagList;
+                })
+                .catch(err => {
+                    console.log(err.response)
+                    alert(`${err.response.status} ${err.response.statusText}`)
+                });
+            },
+            serverPage(category='', tag=''){
+                if (category && tag) alert('error')
+                else if (category) location.href = `/?category=${category}`
+                else if (tag) location.href = `/?tag=${tag}`
+                else location.href = '/'
+                
             }
         }
     }

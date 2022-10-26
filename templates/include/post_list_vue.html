@@ -5,19 +5,30 @@
         delimiters: [ '[[', ']]'],
         data(){
             return {
-                postList: []
+                postList: [],
+                category: '',
+                tag: '',
             }
         },
         created(){
             console.log('sdf');
+            const params = new URL(location).searchParams;
+            this.category = params.get('category')
+            this.tag = params.get('tag')
+
             this.fetchPostList();
         },
 
         methods: {
             fetchPostList(){
-                console.log('fetchPlostList');
+                console.log('fetchPlostList', this.category, this.tag);
+                
+                let getUrl = ''
+                if (this.category) getUrl = `/api/post/list/?category=${this.category}`
+                else if (this.tag) getUrl = `/api/post/list/?tag=${this.tag}`
+                else getUrl = '/api/post/list/'
 
-                axios.get('/api/post/list/')
+                axios.get(getUrl)
                 .then(res => {
                     console.log(res)
                     this.postList = res.data
