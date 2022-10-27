@@ -51,6 +51,15 @@
                 else if (tag) location.href = `/?tag=${tag}`
                 else location.href = '/'
                 
+            },
+            likeCount(postId){
+                axios.get(`/api/like/${postId}/`)
+                .then(res=>{
+                    this.post.like = res.data
+                })
+                .catch(err=>{
+                    alert(`${err.response.status} ${err.response.statusText}`)
+                })
             }
         }
     }
