@@ -14,7 +14,10 @@
                     <span v-if="index !== 0">,</span>
                     <span @click="serverPage('', tag)">[[tag]]</span>
                 </span>
-            </div> 
+            </div>
+            <div class="pl4-4" @click="likeCount(post.id)">
+                [[post.like]]
+            </div>
         </div>
 
         <div class="flex flex-row">
